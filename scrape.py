@@ -51,4 +51,38 @@ def add_team_goals_against(team_name):
     goal_row = req_row.find(lambda tag: tag.name == 'td' and tag["data-stat"] == "goals")
     req_data["Total Goals Against"] = int(goal_row.text)
 
+def add_goals_against_opponent(team_name, opponent_name):
+    team_url = "https://fbref.com" + find_team_page(team_name)
+    team_data = requests.get(team_url)
+    raw = BeautifulSoup(team_data.text, 'html.parser')
+    div = raw.find(lambda tag: tag.name == "div" and tag.has_attr("id") and tag["id"] == "all_matchlogs")
+    body = div.find("tbody")
 
+    rows = body.find_all("tr")
+    goals = 0
+
+    for row in rows:
+        opponent_data = row.find(lambda tag: tag.name == "td" and tag["data-stat"] == "opponent")
+        if opponent_data.text == opponent_name:
+            scored = row.find(lambda tag: tag.name == "td" and tag["data-stat"] == "goals_for").text
+            goals += int(scored)
+
+    req_data["Goals Scored Against Opponent"] = goals
+
+def add_goals_conceded_against_opponent(team_name, opponent_name):
+    team_url = "https://fbref.com" + find_team_page(team_name)
+    team_data = requests.get(team_url)
+    raw = BeautifulSoup(team_data.text, 'html.parser')
+    div = raw.find(lambda tag: tag.name == "div" and tag.has_attr("id") and tag["id"] == "all_matchlogs")
+    body = div.find("tbody")
+
+    rows = body.find_all("tr")
+    goals = 0
+
+    for row in rows:
+        opponent_data = row.find(lambda tag: tag.name == "td" and tag["data-stat"] == "opponent")
+        if opponent_data.text == opponent_name:
+            conceded = row.find(lambda tag: tag.name == "td" and tag["data-stat"] == "goals_against").text
+            goals += int(conceded)
+
+    req_data["Goals Conceded Against Opponent"] = goals
