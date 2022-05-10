@@ -1,4 +1,3 @@
-from random import betavariate
 from bs4 import BeautifulSoup
 import requests
 
@@ -7,6 +6,8 @@ url = 'https://fbref.com/en/comps/9/schedule/Premier-League-Scores-and-Fixtures'
 req_data = {
             "Total Goals For" : 0,
             "Total Goals Against" : 0,
+            "Opponent Total Goals For" : 0,
+            "Opponent Total Goals Against" : 0,
             "Goals Scored Against Opponent" : 0,
             "Goals Conceded Against Opponent" : 0
            }
@@ -30,7 +31,7 @@ def find_team_page(team_name):
     
     return new_url
 
-def add_team_goals_for(team_name):
+def add_team_goals_for(team_name, isOpponent):
     team_url = "https://fbref.com" + find_team_page(team_name)
     team_data = requests.get(team_url)
     raw = BeautifulSoup(team_data.text, 'html.parser')
@@ -38,9 +39,13 @@ def add_team_goals_for(team_name):
     req_row = footer.find('tr')
 
     goal_row = req_row.find(lambda tag: tag.name == 'td' and tag["data-stat"] == "goals")
-    req_data["Total Goals For"] = int(goal_row.text)
 
-def add_team_goals_against(team_name):
+    if isOpponent:
+        req_data["Opponent Total Goals For"] = int(goal_row.text)
+    else:    
+        req_data["Total Goals For"] = int(goal_row.text)
+
+def add_team_goals_against(team_name, isOpponent):
     team_url = "https://fbref.com" + find_team_page(team_name)
     team_data = requests.get(team_url)
     raw = BeautifulSoup(team_data.text, 'html.parser')
@@ -49,7 +54,11 @@ def add_team_goals_against(team_name):
     req_row = rows[1]
 
     goal_row = req_row.find(lambda tag: tag.name == 'td' and tag["data-stat"] == "goals")
-    req_data["Total Goals Against"] = int(goal_row.text)
+
+    if isOpponent:
+        req_data["Opponent Total Goals Against"] = int(goal_row.text)
+    else:
+        req_data["Total Goals Against"] = int(goal_row.text)
 
 def add_goals_against_opponent(team_name, opponent_name):
     team_url = "https://fbref.com" + find_team_page(team_name)
