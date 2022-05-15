@@ -1,16 +1,27 @@
+import scrape_all_teams as all
 from bs4 import BeautifulSoup
 import requests
 
 url = 'https://fbref.com/en/comps/9/schedule/Premier-League-Scores-and-Fixtures'
+url2 = 'https://www.soccerstats.com/homeaway.asp?league=england'
 
 req_data = {
             "Total Goals For" : 0,
             "Total Goals Against" : 0,
+            "Total Home Goals Scored" : 0,
+            "Total Away Goals Scored" : 0,
             "Opponent Total Goals For" : 0,
             "Opponent Total Goals Against" : 0,
+            "Opponent Total Home Goals Scored" : 0,
+            "Opponent Total Away Goals Scored" : 0,
             "Goals Scored Against Opponent" : 0,
-            "Goals Conceded Against Opponent" : 0
+            "Goals Conceded Against Opponent" : 0,
+            "Total Home Goals Scored By All Teams" : 0,
+            "Total Away Goals Scored By All Teams" : 0,
            }
+
+tables = all.tables(url2)
+
 
 def find_team_page(team_name):
     data = requests.get(url)
@@ -95,3 +106,19 @@ def add_goals_conceded_against_opponent(team_name, opponent_name):
             goals += int(conceded)
 
     req_data["Goals Conceded Against Opponent"] = goals
+
+def add_home_goals_scored(team_name, isOpponent):
+    goals = tables.home_goals(team_name)
+    
+    if isOpponent:
+        req_data["Opponent Total Home Goals Scored"] = goals
+    else:
+        req_data["Total Home Goals Scored"] = goals
+
+def add_away_goals_scored(team_name, isOpponent):
+    goals = tables.away_goals(team_name)
+    
+    if isOpponent:
+        req_data["Opponent Total Home Goals Scored"] = goals
+    else:
+        req_data["Total Home Goals Scored"] = goals
