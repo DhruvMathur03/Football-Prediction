@@ -1,4 +1,2 @@
-import pandas as pd
-import numpy as np
-
-print("hehe")
+import math
+import data
