@@ -1,8 +1,10 @@
 import math
 import data
+import cur_season
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
+
 
 df = pd.read_csv("games_updated.csv")
 
@@ -10,11 +12,15 @@ home_team = str(input("Enter Home Team Name : "))
 away_team = str(input("Enter Away Team Name : "))
 season = int(input("Enter Season : "))
 
+new_flag = True
+
 for i in range(len(df['home_team'])):
     if home_team in df['home_team'][i]:
         home_team = df['home_team'][i]
     if away_team in df['away_team'][i]:
         away_team = df['away_team'][i]
+    if season == df['season'][i]:
+        new_flag = False
 
 see_plots = False
 
@@ -23,7 +29,10 @@ if input("Do you want to see probability plots? (Y or N) ") == "Y":
 
 def exp_goals(season, home, away):
     ret = []
-    tup = data.home_away_avg(season, home, away)
+    if new_flag:
+        tup = cur_season.new_home_away_avg(season, home, away)
+    else:
+        tup = data.home_away_avg(season, home, away)
     home_attack_strength = tup[1][2]/tup[0][1]
     away_attack_strength = tup[2][2]/tup[0][3]
 

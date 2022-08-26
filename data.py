@@ -5,20 +5,6 @@ df = pd.read_csv("games_updated.csv")
 
 #returns goals scored and conceded by team against opponent in a list [teams_goals, opponent_goals]
 
-def goals_scored_and_conceded(team, opponent):
-    scgoals = 0
-    congoals = 0
-    for i in range(len(df.index)):
-        teams = [df['home_team'][i], df['away_team'][i]]
-        if team in teams[0] and opponent in teams[1]:
-            scgoals += int(df['home_club_goals'][i])
-            congoals += int(df['away_club_goals'][i])
-        elif team in teams[1] and opponent in teams[0]:
-            scgoals += int(df['away_club_goals'][i])
-            congoals += int(df['home_club_goals'][i])
-
-    return [scgoals, congoals]
-    
 def home_away_avg(season, home, away):
     df_temp = df.loc[(df['season'] == season)]
     home_total = df_temp[['home_club_goals']].sum()
