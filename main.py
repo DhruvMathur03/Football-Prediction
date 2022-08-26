@@ -22,10 +22,6 @@ for i in range(len(df['home_team'])):
     if season == df['season'][i]:
         new_flag = False
 
-see_plots = False
-
-if input("Do you want to see probability plots? (Y or N) ") == "Y":
-    see_plot = True
 
 def exp_goals(season, home, away):
     ret = []
@@ -66,8 +62,8 @@ plt.title(home_team, fontsize="18")
 ax.vlines(X, 0, home_goals_probs, colors='b', lw=5, alpha=0.5)
 for i, v in enumerate(home_goals_probs):
     ax.text(i, v, str(v), color='red', fontweight='bold')
-if see_plots:
-    plt.show()
+
+plt.show()
 
 away_goals_prob = []
 for i in range(6):
@@ -85,8 +81,7 @@ ax.vlines(X, 0, away_goals_probs, colors='b', lw=5, alpha=0.5)
 for i, v in enumerate(away_goals_probs):
     ax.text(i, v, str(v), color='red', fontweight='bold')
 
-if see_plots:
-    plt.show()
+plt.show()
 
 def predicted_scoreline(home_exp, away_exp):
     home_exp = list(home_exp)
