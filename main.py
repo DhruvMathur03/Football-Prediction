@@ -46,13 +46,14 @@ def poisson_probability(l, x):
     probability = ((l**x) * math.exp(-l)) / math.factorial(x)
     return probability*100
 
-home_goals_prob = []
-for i in range(6):
-    expect = poisson_probability(exp_goals(season, home_team, away_team)[0], i)
-    home_goals_prob.append(expect)
+# Compute the expected number of goals for the home and away teams
+exp_home_goals, exp_away_goals = exp_goals(season, home_team, away_team)
+
+# Compute the Poisson probabilities for the range of possible goals scored by the home team
+home_goals_prob = np.array([poisson_probability(exp_home_goals, i) for i in range(6)])
+home_goals_probs = np.round(home_goals_prob,2)
 
 X = [0,1,2,3,4,5]
-home_goals_probs = np.round(home_goals_prob,2)
 
 fig, ax = plt.subplots(1, 1, figsize=(8, 6))
 ax.plot(X, home_goals_probs, 'bo', ms=8)
@@ -65,11 +66,8 @@ for i, v in enumerate(home_goals_probs):
 
 plt.show()
 
-away_goals_prob = []
-for i in range(6):
-    expect = poisson_probability(exp_goals(season, home_team, away_team)[1], i)
-    away_goals_prob.append(expect)
-
+# Compute the Poisson probabilities for the range of possible goals scored by the away team
+away_goals_prob = np.array([poisson_probability(exp_away_goals, i) for i in range(6)])
 away_goals_probs = np.round(away_goals_prob,2)
 
 fig, ax = plt.subplots(1, 1, figsize=(8, 6))
