@@ -19,37 +19,45 @@ function Prediction() {
           setAwayGoalsProb(res.data.away_goals_prob);
         });
     }
+
+    const seasons = [2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022];
+
     return (
         <div className='main'>
-          <div className='header'>
+          <div className='container'>
             <img src={logo} className='App-logo'/>
-            <div className='h1'>
-              <h1>PREMIER LEAGUE SCORE PREDICTOR</h1>
-            </div>
+            <h1 className='h1'>PREMIER LEAGUE SCORE PREDICTOR</h1>
           </div>
-          <hr style={{border: "1px solid #ccc"}} />
+          <hr className='line_under_header'/>
           <br />
           <br />
-          <form onSubmit={handleSubmit} style={{display: "flex", justifyContent: "center"}}>
+          <form onSubmit={handleSubmit} className='form1'>
             <div style={{display: "flex", display: "flex", justifyContent: "space-between", width: "50%"}}>
-              <label style={{textAlign: "center", width: "100%", position: "relative"}}>
-                <span style={{position: "absolute", top: "-20px", left: "50%", transform: "translateX(-50%)"}}>
-                  HOME
+              <label className='label1'>
+                <span className='span1'>
+                  <h2>HOME</h2>
                 </span>
-                  <input type='text' style={{border: "none", borderBottom: "1px solid black"}} value={homeTeam} onChange={e => setHomeTeam(e.target.value)}/>
+                  <input type='text' className='input1' value={homeTeam} onChange={e => setHomeTeam(e.target.value)}/>
               </label>
               <br />
-              <label style={{textAlign: "center", width: "100%", position: "relative"}}>
-                <span style={{position: "absolute", top: "-20px", left: "50%", transform: "translateX(-50%)"}}> 
-                  AWAY
+              <label className='label1'>
+                <span className='span1'> 
+                  <h2>AWAY</h2>
                 </span>
-                  <input type='text' style={{border: "none", borderBottom: "1px solid black"}} value={awayTeam} onChange={e => setAwayTeam(e.target.value)}/>
+                  <input type='text' className='input1' value={awayTeam} onChange={e => setAwayTeam(e.target.value)}/>
               </label>
             </div>
-            <br />
-            <button type='submit'>
-                Submit
-            </button>
+          </form>
+          <br />
+          <form onSubmit={handleSubmit}>
+            <div>
+              <label>
+                Season :
+                <div>
+                  {seasons.map((year) => (<button key={year} onClick={() => setSeason(year)} className='season-button'> {year} </button>))}
+                </div>
+              </label>
+            </div>
           </form>
           <br />
           <div>

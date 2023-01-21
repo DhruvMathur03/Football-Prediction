@@ -2,11 +2,21 @@
   text-align: center;
 }
 
+.same-line{
+  display: inline-block;
+}
+
+.container {
+  position: relative;
+}
+
 .h1 {
   justify-content: center;
-  margin-left: 18%;
-  font-family: PremierSans-Bold,Arial,Helvetica Neue,Helvetica,sans-serif;
-  font-weight: 400;
+  margin-left: 20.5%;
+}
+
+.line_under_header {
+  border: 1px solid #ccc;
 }
 
 .header {
@@ -19,24 +29,51 @@
   height: 90px;
   width: 90px;
   margin-right: 10px;
-  margin-left: 50px;
+  margin-left: 10px;
+  position: absolute;
 }
 
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+.form1 {
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  display: flex;
 }
 
-.App-link {
-  color: #61dafb;
+.label1 {
+  text-align: center;
+  width: 100%;
+  position: relative;
 }
+
+.span1 {
+  position: absolute;
+  top: -58px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.input1 {
+  border: none;
+  border-bottom: 1px solid black;
+  text-align: center;
+  font-size: medium;
+}
+
+.season-button {
+  background-color: #fff;
+  border: none;
+  color: #000;
+  padding: 10px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 4px;
+}
+.season-button:hover {
+  background-color: #e6e6e6;
+}
+
+
