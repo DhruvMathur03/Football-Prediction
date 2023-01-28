@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import logo from './premier-league-logo.svg';
+import logo from './premier-league-1.svg';
 import './App.css';
 
 function Prediction() {
