@@ -9,6 +9,7 @@ function Prediction() {
     const [season, setSeason] = useState(0);
     const [homeGoalsProb, setHomeGoalsProb] = useState([]);
     const [awayGoalsProb, setAwayGoalsProb] = useState([]);
+    const [hoveredSeason, setHoveredSeason] = useState(0);
 
     const handleSubmit = event => {
       event.preventDefault(); 
@@ -19,6 +20,15 @@ function Prediction() {
           setAwayGoalsProb(res.data.away_goals_prob);
         });
     }
+
+    const handleSeasonMouseOver = year => {
+      setHoveredSeason(year);
+    };
+      
+    const handleSeasonMouseOut = () => {
+      setHoveredSeason(0);
+    };
+
 
     const seasons = [2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022];
 
@@ -54,7 +64,11 @@ function Prediction() {
               <label>
                 Season :
                 <div>
-                  {seasons.map((year) => (<button key={year} onClick={() => setSeason(year)} className='season-button'> {year} </button>))}
+                  {seasons.map((year) => (<button key={year} 
+                  onMouseOver={() => handleSeasonMouseOver(year)}
+                  onMouseOut={handleSeasonMouseOut}
+                  onClick={() => setSeason(year)}
+                  className={`season-button ${setSeason === year || hoveredSeason === year ? 'selected' : ''}`}> {year} </button>))}
                 </div>
               </label>
             </div>

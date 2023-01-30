@@ -71,8 +71,11 @@
   cursor: pointer;
   border-radius: 4px;
 }
-.season-button:hover {
-  background-color: #e6e6e6;
+.selected {
+  background-color: lightblue;
 }
+/*.season-button:hover {
+  background-color: #e6e6e6;
+}*/
 
 
